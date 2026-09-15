@@ -1,6 +1,8 @@
 name: gdrive-mirror
 on:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   mirror:
     runs-on: ubuntu-latest

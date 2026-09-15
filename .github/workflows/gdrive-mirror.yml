@@ -1,0 +1,23 @@
+name: gdrive-mirror
+on:
+  workflow_dispatch:
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install gdown
+        run: pip install -q gdown
+      - name: Download data.zip
+        run: gdown -O data.zip "https://drive.google.com/uc?id=1mpzlfKLuh3cHvox8UpP1RkPUHKeN4_eL"
+      - name: Download model.zip
+        run: gdown -O model.zip "https://drive.google.com/uc?id=1pZcUDot9kmcjP2a4d10QVo86WGl3Bj9t"
+      - name: Show sizes
+        run: ls -lh *.zip
+      - name: Upload to Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "data.zip,model.zip"
+          tag: v1.0
+          name: "GenTKG data and model"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
